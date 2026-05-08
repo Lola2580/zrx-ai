@@ -170,7 +170,7 @@ ONLINE
 PREDICTION
 </h2>
 
-<p class="big">
+<p class="big" id="prediction">
 BIG
 </p>
 
@@ -182,7 +182,7 @@ BIG
 CONFIDENCE
 </h2>
 
-<p class="yellow">
+<p class="yellow" id="confidence">
 92%
 </p>
 
@@ -194,7 +194,7 @@ CONFIDENCE
 AI IQ
 </h2>
 
-<p class="red">
+<p class="red" id="iq">
 178
 </p>
 
@@ -206,7 +206,7 @@ AI IQ
 WIN RATE
 </h2>
 
-<p class="green">
+<p class="green" id="winrate">
 87%
 </p>
 
@@ -247,6 +247,61 @@ function logout(){
 localStorage.removeItem(
 "user"
 );
+  function generateAI(){
+
+const predictions = [
+   "BIG",
+   "SMALL"
+];
+
+const prediction = predictions[
+Math.floor(Math.random()*2)
+];
+
+const confidence =
+Math.floor(
+70 + Math.random()*30
+);
+
+const iq =
+Math.floor(
+140 + Math.random()*60
+);
+
+const winrate =
+Math.floor(
+80 + Math.random()*20
+);
+
+document.getElementById(
+"prediction"
+).innerText =
+prediction;
+
+document.getElementById(
+"confidence"
+).innerText =
+confidence + "%";
+
+document.getElementById(
+"iq"
+).innerText =
+iq;
+
+document.getElementById(
+"winrate"
+).innerText =
+winrate + "%";
+
+}
+
+generateAI();
+
+setInterval(()=>{
+
+generateAI();
+
+},5000);
 
 window.location.href =
 "index.html";
