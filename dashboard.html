@@ -12,6 +12,8 @@ content="width=device-width, initial-scale=1.0">
 
 <style>
 
+<style>
+
 *{
 margin:0;
 padding:0;
@@ -25,10 +27,10 @@ background:#050505;
 
 color:white;
 
-padding:30px;
+padding:20px;
 }
 
-.header{
+.topbar{
 
 display:flex;
 
@@ -36,7 +38,7 @@ justify-content:space-between;
 
 align-items:center;
 
-margin-bottom:30px;
+margin-bottom:25px;
 }
 
 .logo{
@@ -50,19 +52,27 @@ color:#ff2e2e;
 
 button{
 
-padding:12px 20px;
+padding:12px 18px;
+
+background:red;
 
 border:none;
 
-border-radius:10px;
-
-background:#ff2e2e;
-
 color:white;
 
-font-weight:bold;
+border-radius:12px;
 
 cursor:pointer;
+}
+
+.grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+
+gap:20px;
 }
 
 .card{
@@ -71,25 +81,54 @@ background:#111;
 
 border:1px solid #222;
 
-padding:25px;
-
 border-radius:20px;
 
-margin-top:20px;
+padding:25px;
+
+box-shadow:
+0 0 20px rgba(255,0,0,.1);
 }
 
-h2{
+.card h2{
+
+margin-bottom:15px;
+
+font-size:20px;
+
+color:#888;
+}
+
+.card p{
+
+font-size:28px;
+
+font-weight:bold;
+}
+
+.green{
 color:#00ff99;
-margin-bottom:10px;
 }
 
+.red{
+color:#ff3c3c;
+}
+
+.yellow{
+color:#ffd500;
+}
+
+.big{
+color:#00c3ff;
+}
+
+</style>
 </style>
 
 </head>
 
 <body>
 
-<div class="header">
+<div class="topbar">
 
 <div class="logo">
 🔥 ZRX AI
@@ -101,16 +140,89 @@ Logout
 
 </div>
 
+<div class="grid">
+
 <div class="card">
 
-<h2 id="welcome"></h2>
+<h2>
+WELCOME
+</h2>
 
-<p>
-Welcome to futuristic AI dashboard 😎
+<p id="welcome"></p>
+
+</div>
+
+<div class="card">
+
+<h2>
+AI STATUS
+</h2>
+
+<p class="green">
+ONLINE
 </p>
 
 </div>
 
+<div class="card">
+
+<h2>
+PREDICTION
+</h2>
+
+<p class="big">
+BIG
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>
+CONFIDENCE
+</h2>
+
+<p class="yellow">
+92%
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>
+AI IQ
+</h2>
+
+<p class="red">
+178
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>
+WIN RATE
+</h2>
+
+<p class="green">
+87%
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>
+LIVE CLOCK
+</h2>
+
+<p id="clock"></p>
+
+</div>
+
+</div>
 <script>
 
 const user =
@@ -139,7 +251,14 @@ localStorage.removeItem(
 window.location.href =
 "index.html";
 }
+setInterval(()=>{
 
+document.getElementById(
+"clock"
+).innerText =
+new Date().toLocaleTimeString();
+
+},1000);
 </script>
 
 </body>
