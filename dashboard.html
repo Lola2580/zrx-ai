@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
@@ -8,9 +7,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>ZRX Dashboard</title>
-
-<style>
+<title>ZRX AI Dashboard</title>
 
 <style>
 
@@ -63,6 +60,8 @@ color:white;
 border-radius:12px;
 
 cursor:pointer;
+
+font-weight:bold;
 }
 
 .grid{
@@ -121,7 +120,36 @@ color:#ffd500;
 color:#00c3ff;
 }
 
-</style>
+#history{
+
+max-height:350px;
+
+overflow:auto;
+
+margin-top:15px;
+}
+
+.history-item{
+
+background:#1a1a1a;
+
+padding:12px;
+
+border-radius:12px;
+
+margin-bottom:10px;
+
+border-left:4px solid #00ff99;
+
+font-size:14px;
+}
+
+.time{
+margin-top:5px;
+font-size:12px;
+color:#888;
+}
+
 </style>
 
 </head>
@@ -222,7 +250,30 @@ LIVE CLOCK
 
 </div>
 
+<div class="card">
+
+<h2>
+TOTAL PREDICTIONS
+</h2>
+
+<p id="total">
+0
+</p>
+
 </div>
+
+<div class="card">
+
+<h2>
+PREDICTION HISTORY
+</h2>
+
+<div id="history"></div>
+
+</div>
+
+</div>
+
 <script>
 
 const user =
@@ -242,19 +293,47 @@ document.getElementById(
 ).innerText =
 "Hello, " + user.username;
 
+// LOGOUT
+
 function logout(){
 
 localStorage.removeItem(
 "user"
 );
-  function generateAI(){
+
+window.location.href =
+"index.html";
+
+}
+
+// CLOCK
+
+setInterval(()=>{
+
+document.getElementById(
+"clock"
+).innerText =
+new Date().toLocaleTimeString();
+
+},1000);
+
+// AI MEMORY
+
+let aiHistory = JSON.parse(
+localStorage.getItem("aiHistory")
+) || [];
+
+// AI ENGINE
+
+function generateAI(){
 
 const predictions = [
    "BIG",
    "SMALL"
 ];
 
-const prediction = predictions[
+const prediction =
+predictions[
 Math.floor(Math.random()*2)
 ];
 
@@ -293,9 +372,90 @@ document.getElementById(
 ).innerText =
 winrate + "%";
 
+// SAVE HISTORY
+
+const historyItem = {
+
+prediction,
+
+confidence,
+
+iq,
+
+time:
+new Date().toLocaleTimeString()
+
+};
+
+aiHistory.unshift(historyItem);
+
+aiHistory = aiHistory.slice(0,20);
+
+localStorage.setItem(
+"aiHistory",
+JSON.stringify(aiHistory)
+);
+
+// UPDATE UI
+
+renderHistory();
+
 }
 
+// RENDER HISTORY
+
+function renderHistory(){
+
+const historyDiv =
+document.getElementById(
+"history"
+);
+
+historyDiv.innerHTML = "";
+
+aiHistory.forEach(item=>{
+
+historyDiv.innerHTML += `
+
+<div class="history-item">
+
+<div>
+Prediction:
+<b>${item.prediction}</b>
+</div>
+
+<div>
+Confidence:
+${item.confidence}%
+</div>
+
+<div>
+AI IQ:
+${item.iq}
+</div>
+
+<div class="time">
+${item.time}
+</div>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+"total"
+).innerText =
+aiHistory.length;
+
+}
+
+// START SYSTEM
+
 generateAI();
+
+renderHistory();
 
 setInterval(()=>{
 
@@ -303,17 +463,6 @@ generateAI();
 
 },5000);
 
-window.location.href =
-"index.html";
-}
-setInterval(()=>{
-
-document.getElementById(
-"clock"
-).innerText =
-new Date().toLocaleTimeString();
-
-},1000);
 </script>
 
 </body>
