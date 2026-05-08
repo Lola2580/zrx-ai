@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -7,9 +8,16 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Dashboard</title>
+<title>ZRX Dashboard</title>
 
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
 
 body{
 
@@ -17,29 +25,122 @@ background:#050505;
 
 color:white;
 
-font-family:Arial;
+padding:30px;
+}
+
+.header{
 
 display:flex;
 
-justify-content:center;
+justify-content:space-between;
 
 align-items:center;
 
-height:100vh;
+margin-bottom:30px;
 }
 
-h1{
+.logo{
+
+font-size:32px;
+
+font-weight:bold;
+
+color:#ff2e2e;
+}
+
+button{
+
+padding:12px 20px;
+
+border:none;
+
+border-radius:10px;
+
+background:#ff2e2e;
+
+color:white;
+
+font-weight:bold;
+
+cursor:pointer;
+}
+
+.card{
+
+background:#111;
+
+border:1px solid #222;
+
+padding:25px;
+
+border-radius:20px;
+
+margin-top:20px;
+}
+
+h2{
 color:#00ff99;
+margin-bottom:10px;
 }
 
 </style>
 
 </head>
+
 <body>
 
-<h1>
-🔥 Welcome To ZRX AI Dashboard
-</h1>
+<div class="header">
+
+<div class="logo">
+🔥 ZRX AI
+</div>
+
+<button onclick="logout()">
+Logout
+</button>
+
+</div>
+
+<div class="card">
+
+<h2 id="welcome"></h2>
+
+<p>
+Welcome to futuristic AI dashboard 😎
+</p>
+
+</div>
+
+<script>
+
+const user =
+JSON.parse(
+localStorage.getItem("user")
+);
+
+if(!user){
+
+window.location.href =
+"index.html";
+
+}
+
+document.getElementById(
+"welcome"
+).innerText =
+"Hello, " + user.username;
+
+function logout(){
+
+localStorage.removeItem(
+"user"
+);
+
+window.location.href =
+"index.html";
+}
+
+</script>
 
 </body>
 </html>
