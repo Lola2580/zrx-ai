@@ -42,17 +42,11 @@ await fetch(API_URL);
 const data =
 await response.json();
 
-// CHECK
-
-if(
-!data.success
-){
+if(!data.success){
 
 return;
 
 }
-
-// AI DATA
 
 const ai =
 data.prediction;
@@ -69,25 +63,27 @@ document.getElementById(
 ).innerText =
 ai.confidence + "%";
 
+// OPTIONAL SAFE VALUES
+
 document.getElementById(
 "signal"
 ).innerText =
-ai.signal;
+ai.signal || "--";
 
 document.getElementById(
 "iq"
 ).innerText =
-ai.iq;
+ai.iq || "--";
 
 document.getElementById(
 "period"
 ).innerText =
-ai.period;
+ai.period || "--";
 
 // HISTORY
 
 renderHistory(
-data.memory
+data.memory || []
 );
 
 }catch(err){
