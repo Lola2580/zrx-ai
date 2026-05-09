@@ -1,0 +1,24 @@
+export const CONFIG = {
+
+// MAIN API
+
+HISTORY_API:
+"https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json",
+
+// AI SETTINGS
+
+MAX_HISTORY:100,
+
+REFRESH_TIME:5000,
+
+// CONFIDENCE
+
+MIN_CONFIDENCE:70,
+
+MAX_CONFIDENCE:95,
+
+// STREAK SETTINGS
+
+REVERSAL_STREAK:4
+
+};
