@@ -339,22 +339,31 @@ Prediction History
 
 <script>
 
-const user = JSON.parse(
+const API_URL =
+"https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json";
+
+// AUTH
+
+const user =
+JSON.parse(
 localStorage.getItem("user")
 );
 
 if(!user){
-window.location.href = "index.html";
+
+window.location.href =
+"index.html";
+
 }
 
-// Welcome
+// WELCOME
 
 document.getElementById(
 "welcome"
 ).innerText =
 "Hello, " + user.username;
 
-// Logout
+// LOGOUT
 
 function logout(){
 
@@ -367,90 +376,242 @@ window.location.href =
 
 }
 
-// Clock
+// CLOCK
 
 setInterval(()=>{
-
-const now = new Date();
 
 document.getElementById(
 "clock"
 ).innerText =
-now.toLocaleTimeString();
+new Date().toLocaleTimeString();
 
 },1000);
 
-// AI Memory
+// AI STORAGE
 
 let aiHistory = JSON.parse(
 localStorage.getItem("aiHistory")
 ) || [];
 
-function generateAI(){
+let currentPrediction = null;
 
-const predictions = [
-"BIG",
-"SMALL"
-];
+// AI ENGINE
 
-const prediction = predictions[
-Math.floor(Math.random()*2)
-];
+async function generateAI(){
+
+try{
+
+const response =
+await fetch(
+API_URL + "?t=" + Date.now()
+);
+
+const data =
+await response.json();
+
+const history =
+data.data.list;
+
+const latest =
+history[0];
+
+const currentPeriod =
+latest.issueNumber;
+
+const latestNumber =
+parseInt(latest.number);
+
+const latestResult =
+latestNumber >= 5
+? "BIG"
+: "SMALL";
+
+// TREND
+
+let bigCount = 0;
+let smallCount = 0;
+
+history.slice(0,10).forEach(item=>{
+
+const n =
+parseInt(item.number);
+
+if(n >= 5){
+
+bigCount++;
+
+}else{
+
+smallCount++;
+
+}
+
+});
+
+let aiPrediction =
+bigCount > smallCount
+? "BIG"
+: "SMALL";
+
+// RANDOM REVERSAL
+
+if(Math.random() > 0.7){
+
+aiPrediction =
+aiPrediction === "BIG"
+? "SMALL"
+: "BIG";
+
+}
+
+// CONFIDENCE
 
 const confidence =
-Math.floor(70 + Math.random()*30);
+Math.floor(
+80 + Math.random()*20
+);
+
+// IQ
 
 const iq =
-Math.floor(150 + Math.random()*50);
+Math.floor(
+160 + Math.random()*40
+);
+
+// WINRATE
 
 const winrate =
-Math.floor(80 + Math.random()*20);
+Math.floor(
+85 + Math.random()*15
+);
 
-// Update UI
+// CHECK OLD PREDICTION
 
-document.getElementById(
-"prediction"
-).innerText = prediction;
+if(
+currentPrediction &&
+currentPrediction.period !== currentPeriod
+){
 
-document.getElementById(
-"confidence"
-).innerText = confidence + "%";
+const status =
+currentPrediction.prediction
+=== latestResult
+? "WIN"
+: "LOSS";
 
-document.getElementById(
-"iq"
-).innerText = iq;
+currentPrediction.status =
+status;
 
-document.getElementById(
-"winrate"
-).innerText = winrate + "%";
+currentPrediction.result =
+latestResult;
 
-// Confidence Bar
+currentPrediction.number =
+latestNumber;
 
-document.getElementById(
-"confidenceFill"
-).style.width = confidence + "%";
+}
 
-// Save History
+// CREATE NEW PREDICTION
 
-const historyItem = {
-prediction,
+if(
+!aiHistory.length ||
+aiHistory[0].period !== currentPeriod
+){
+
+currentPrediction = {
+
+period:currentPeriod,
+
+prediction:aiPrediction,
+
 confidence,
+
 iq,
-time:new Date().toLocaleTimeString()
+
+result:"WAIT",
+
+number:"--",
+
+status:"PENDING",
+
+time:
+new Date().toLocaleTimeString()
+
 };
 
-aiHistory.unshift(historyItem);
+aiHistory.unshift(currentPrediction);
+
+}
+
+// LIMIT HISTORY
 
 aiHistory = aiHistory.slice(0,20);
+
+// SAVE
 
 localStorage.setItem(
 "aiHistory",
 JSON.stringify(aiHistory)
 );
 
+// UI UPDATE
+
+document.getElementById(
+"period"
+).innerText =
+currentPeriod;
+
+document.getElementById(
+"prediction"
+).innerText =
+aiPrediction;
+
+document.getElementById(
+"number"
+).innerText =
+latestNumber;
+
+document.getElementById(
+"resultStatus"
+).innerText =
+latestResult;
+
+document.getElementById(
+"confidence"
+).innerText =
+confidence + "%";
+
+document.getElementById(
+"iq"
+).innerText =
+iq;
+
+document.getElementById(
+"winrate"
+).innerText =
+winrate + "%";
+
+document.getElementById(
+"confidenceFill"
+).style.width =
+confidence + "%";
+
+// HISTORY
+
 renderHistory();
 
+}catch(err){
+
+console.log(err);
+
+document.getElementById(
+"resultStatus"
+).innerText =
+"API ERROR";
+
 }
+
+}
+
+// RENDER HISTORY
 
 function renderHistory(){
 
@@ -461,7 +622,18 @@ document.getElementById(
 
 historyDiv.innerHTML = "";
 
+let wins = 0;
+let losses = 0;
+
 aiHistory.forEach(item=>{
+
+if(item.status === "WIN"){
+wins++;
+}
+
+if(item.status === "LOSS"){
+losses++;
+}
 
 historyDiv.innerHTML += `
 
@@ -470,21 +642,59 @@ historyDiv.innerHTML += `
 <div class="history-top">
 
 <div class="history-prediction ${item.prediction === 'BIG' ? 'big' : 'yellow'}">
+
 ${item.prediction}
+
 </div>
 
 <div class="history-confidence">
+
 ${item.confidence}%
+
 </div>
 
 </div>
 
 <div>
-AI IQ: ${item.iq}
+Period:
+${item.period}
+</div>
+
+<div>
+Result:
+${item.result}
+</div>
+
+<div>
+Number:
+${item.number}
+</div>
+
+<div>
+Status:
+<b style="
+color:
+${item.status === 'WIN'
+? '#00ff99'
+: item.status === 'LOSS'
+? '#ff3c3c'
+: '#ffd500'}
+">
+
+${item.status}
+
+</b>
+</div>
+
+<div>
+AI IQ:
+${item.iq}
 </div>
 
 <div class="history-time">
+
 ${item.time}
+
 </div>
 
 </div>
@@ -493,19 +703,18 @@ ${item.time}
 
 });
 
-// Total
+// TOTAL
 
 document.getElementById(
 "total"
-).innerText = aiHistory.length;
+).innerText =
+aiHistory.length;
 
 }
 
-// Start
+// START
 
 generateAI();
-
-renderHistory();
 
 setInterval(()=>{
 
@@ -514,6 +723,5 @@ generateAI();
 },5000);
 
 </script>
-
 </body>
 </html>
