@@ -1,120 +1,64 @@
 import express from "express";
 import cors from "cors";
 
-import { fetchHistory }
-from "./apiFetcher.js";
-
-import { runSmartAI }
-from "./smartAI.js";
-
-import { getMemory }
-from "./memory.js";
-
 const app = express();
-
-// MIDDLEWARE
 
 app.use(cors());
 
-app.use(express.json());
-
-// HOME ROUTE
-
-app.get("/",(req,res)=>{
+app.get("/", (req, res) => {
 
 res.json({
 
-success:true,
-
-message:"🚀 ZRX AI Backend Running"
-
-});
+success: true,
+message: "🚀 ZRX AI Running"
 
 });
 
-// MAIN AI ROUTE
+});
 
-app.get(
-"/api/predict",
-async(req,res)=>{
-
-try{
-
-// FETCH HISTORY
-
-const history =
-await fetchHistory();
-
-// RUN AI
-
-const prediction =
-await runSmartAI(
-history
-);
-
-// RESPONSE
+app.get("/api/predict", (req, res) => {
 
 res.json({
 
-success:true,
+success: true,
 
-prediction,
+prediction: {
 
-memory:getMemory(),
+period: "12345",
 
-serverTime:
-new Date()
+prediction: "BIG",
 
-});
+confidence: 92,
 
-}catch(err){
+signal: "STRONG",
 
-console.log(
-"SERVER ERROR:",
-err.message
-);
+iq: 188,
 
-res.status(500).json({
+trend: "BIG",
 
-success:false,
+streak: "BIG x3",
 
-message:"AI SERVER ERROR"
+hotNumber: 7,
 
-});
+status: "PENDING",
 
-}
+time: new Date()
 
-});
+},
 
-// MEMORY ROUTE
-
-app.get(
-"/api/memory",
-(req,res)=>{
-
-res.json({
-
-success:true,
-
-memory:getMemory()
+memory: []
 
 });
 
 });
-
-// RAILWAY PORT FIX
 
 const PORT =
 process.env.PORT || 3000;
 
-// START SERVER
-
-app.listen(PORT,()=>{
+app.listen(PORT, () => {
 
 console.log(
-
-`🚀 ZRX AI Running On Port ${PORT}`
-
+`🚀 Server Running On ${PORT}`
 );
 
 });
