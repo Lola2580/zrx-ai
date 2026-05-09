@@ -2,52 +2,60 @@ import express from "express";
 
 const app = express();
 
+// IMPORTANT
+
+app.disable("x-powered-by");
+
+// ROOT ROUTE
+
 app.get("/", (req, res) => {
 
-res.send("ZRX AI Backend Running 🚀");
+res.status(200).send(
+"ZRX AI LIVE 🚀"
+);
 
 });
 
+// TEST API
+
 app.get("/api/predict", (req, res) => {
 
-res.json({
+res.status(200).json({
 
 success: true,
 
 prediction: {
 
-period: "123456",
-
 prediction: "BIG",
 
-confidence: 92,
+confidence: 92
 
-signal: "STRONG",
-
-iq: 188,
-
-trend: "BIG",
-
-streak: "BIG x3",
-
-hotNumber: 7,
-
-status: "PENDING",
-
-time: new Date()
-
-},
-
-memory: []
+}
 
 });
 
 });
+
+// HEALTHCHECK
+
+app.get("/health", (req, res) => {
+
+res.status(200).send("OK");
+
+});
+
+// PORT
 
 const PORT =
-process.env.PORT || 3000;
+process.env.PORT || 8080;
 
-app.listen(PORT, () => {
+// VERY IMPORTANT
+
+const HOST = "0.0.0.0";
+
+// START
+
+app.listen(PORT, HOST, () => {
 
 console.log(
 `🚀 Server Running On ${PORT}`
