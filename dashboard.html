@@ -3,272 +3,17 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ZRX Ultimate AI</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>ZRX AI Dashboard</title>
 
-<style>
+<link rel="stylesheet"
+href="dashboard.css">
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-background:#050505;
-color:white;
-overflow-x:hidden;
-padding:14px;
-}
-
-body::before{
-content:'';
-position:fixed;
-inset:0;
-background:
-radial-gradient(circle at top left,#ff000020,transparent 30%),
-radial-gradient(circle at bottom right,#00ffff18,transparent 30%),
-#050505;
-z-index:-1;
-}
-
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:18px;
-}
-
-.logo{
-font-size:30px;
-font-weight:700;
-color:#ff3434;
-text-shadow:0 0 18px rgba(255,0,0,.45);
-}
-
-.logout-btn{
-border:none;
-padding:12px 18px;
-border-radius:14px;
-background:linear-gradient(135deg,#ff1e1e,#990000);
-color:white;
-font-weight:600;
-cursor:pointer;
-}
-
-.main-card{
-background:
-linear-gradient(145deg,#141414,#0c0c0c);
-
-border:1px solid #222;
-
-border-radius:28px;
-
-padding:24px;
-
-box-shadow:
-0 0 30px rgba(255,0,0,.12);
-
-margin-bottom:18px;
-}
-
-.label{
-font-size:12px;
-letter-spacing:1px;
-color:#777;
-}
-
-.period{
-margin-top:8px;
-font-size:22px;
-font-weight:700;
-color:#ffd500;
-}
-
-.prediction{
-margin-top:18px;
-font-size:90px;
-font-weight:700;
-text-align:center;
-animation:pulse 1.5s infinite;
-}
-
-.big{
-color:#00c3ff;
-text-shadow:0 0 18px rgba(0,195,255,.5);
-}
-
-.small{
-color:#ffd500;
-text-shadow:0 0 18px rgba(255,213,0,.5);
-}
-
-@keyframes pulse{
-
-0%{
-transform:scale(1);
-}
-
-50%{
-transform:scale(1.05);
-}
-
-100%{
-transform:scale(1);
-}
-
-}
-
-.bar{
-margin-top:18px;
-width:100%;
-height:14px;
-background:#1b1b1b;
-border-radius:20px;
-overflow:hidden;
-}
-
-.fill{
-height:100%;
-width:0%;
-background:
-linear-gradient(
-90deg,
-#ff0000,
-#ffd500,
-#00ff99
-);
-transition:.4s;
-}
-
-.stats{
-display:grid;
-grid-template-columns:
-repeat(2,1fr);
-
-gap:14px;
-margin-bottom:18px;
-}
-
-.card{
-background:
-linear-gradient(145deg,#141414,#0d0d0d);
-
-border:1px solid #222;
-
-border-radius:22px;
-
-padding:18px;
-}
-
-.card-title{
-font-size:11px;
-letter-spacing:1px;
-color:#777;
-}
-
-.card-value{
-margin-top:10px;
-font-size:28px;
-font-weight:700;
-}
-
-.green{
-color:#00ff99;
-}
-
-.red{
-color:#ff4d4d;
-}
-
-.yellow{
-color:#ffd500;
-}
-
-.blue{
-color:#00c3ff;
-}
-
-.history-box{
-background:
-linear-gradient(145deg,#141414,#0d0d0d);
-
-border:1px solid #222;
-
-border-radius:26px;
-
-padding:20px;
-}
-
-.history-title{
-font-size:22px;
-font-weight:700;
-margin-bottom:16px;
-color:#ff3434;
-}
-
-#history{
-display:flex;
-flex-direction:column;
-gap:12px;
-max-height:450px;
-overflow-y:auto;
-}
-
-.history-item{
-background:#181818;
-padding:16px;
-border-radius:18px;
-border-left:4px solid #00ff99;
-}
-
-.history-top{
-display:flex;
-justify-content:space-between;
-margin-bottom:10px;
-}
-
-.history-prediction{
-font-size:20px;
-font-weight:700;
-}
-
-.status-win{
-color:#00ff99;
-}
-
-.status-loss{
-color:#ff4d4d;
-}
-
-.status-pending{
-color:#ffd500;
-}
-
-.time{
-margin-top:8px;
-font-size:12px;
-color:#777;
-}
-
-@media(max-width:600px){
-
-.prediction{
-font-size:65px;
-}
-
-.card-value{
-font-size:24px;
-}
-
-}
-
-</style>
 </head>
+
 <body>
 
 <div class="topbar">
@@ -277,8 +22,13 @@ font-size:24px;
 🔥 ZRX AI
 </div>
 
-<button class="logout-btn" onclick="logout()">
+<button
+class="logout-btn"
+onclick="logout()"
+>
+
 Logout
+
 </button>
 
 </div>
@@ -294,11 +44,13 @@ NEXT PERIOD
 </div>
 
 <div class="prediction big" id="prediction">
-BIG
+WAIT
 </div>
 
 <div class="bar">
+
 <div class="fill" id="fill"></div>
+
 </div>
 
 </div>
@@ -308,34 +60,11 @@ BIG
 <div class="card">
 
 <div class="card-title">
-LATEST NUMBER
-</div>
-
-<div class="card-value red" id="latestNumber">
---
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="card-title">
-LAST RESULT
-</div>
-
-<div class="card-value blue" id="lastResult">
---
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="card-title">
 CONFIDENCE
 </div>
 
-<div class="card-value yellow" id="confidence">
+<div class="card-value yellow"
+id="confidence">
 0%
 </div>
 
@@ -347,7 +76,8 @@ CONFIDENCE
 SIGNAL
 </div>
 
-<div class="card-value green" id="signal">
+<div class="card-value green"
+id="signal">
 --
 </div>
 
@@ -359,7 +89,8 @@ SIGNAL
 AI IQ
 </div>
 
-<div class="card-value red" id="iq">
+<div class="card-value red"
+id="iq">
 0
 </div>
 
@@ -368,22 +99,11 @@ AI IQ
 <div class="card">
 
 <div class="card-title">
-WIN RATE
+COUNTDOWN
 </div>
 
-<div class="card-value green" id="winrate">
-0%
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="card-title">
-NEXT RESULT
-</div>
-
-<div class="card-value yellow" id="countdown">
+<div class="card-value yellow"
+id="countdown">
 00:00
 </div>
 
@@ -395,7 +115,8 @@ NEXT RESULT
 TOTAL SIGNALS
 </div>
 
-<div class="card-value" id="total">
+<div class="card-value"
+id="total">
 0
 </div>
 
@@ -406,438 +127,14 @@ TOTAL SIGNALS
 <div class="history-box">
 
 <div class="history-title">
-Prediction History
+AI HISTORY
 </div>
 
 <div id="history"></div>
 
 </div>
 
-<script>
-
-const API =
-"https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json";
-
-const user =
-JSON.parse(
-localStorage.getItem("user")
-);
-
-if(!user){
-
-window.location.href =
-"index.html";
-
-}
-
-function logout(){
-
-localStorage.removeItem(
-"user"
-);
-
-window.location.href =
-"index.html";
-
-}
-
-let aiHistory =
-JSON.parse(
-localStorage.getItem("zrxHistory")
-) || [];
-
-let lockedPeriod = null;
-
-// MAIN AI
-
-async function runAI(){
-
-try{
-
-const response =
-await fetch(
-API + "?t=" + Date.now()
-);
-
-const data =
-await response.json();
-
-const latest =
-data.data.list[0];
-
-const currentPeriod =
-parseInt(latest.issueNumber);
-
-const nextPeriod =
-String(currentPeriod + 1);
-
-const latestNumber =
-parseInt(latest.number);
-
-const latestResult =
-latestNumber >= 5
-? "BIG"
-: "SMALL";
-
-// TREND ANALYSIS
-
-let bigCount = 0;
-let smallCount = 0;
-
-data.data.list
-.slice(0,10)
-.forEach(item=>{
-
-const n =
-parseInt(item.number);
-
-if(n >= 5){
-
-bigCount++;
-
-}else{
-
-smallCount++;
-
-}
-
-});
-
-// AI LOGIC
-
-let prediction =
-bigCount >= smallCount
-? "BIG"
-: "SMALL";
-
-// REVERSAL
-
-if(Math.random() > 0.75){
-
-prediction =
-prediction === "BIG"
-? "SMALL"
-: "BIG";
-
-}
-
-// LOCK
-
-if(lockedPeriod !== nextPeriod){
-
-lockedPeriod =
-nextPeriod;
-
-// CHECK OLD
-
-if(aiHistory.length){
-
-const old =
-aiHistory[0];
-
-if(
-old.status === "PENDING"
-){
-
-old.result =
-latestResult;
-
-old.number =
-latestNumber;
-
-old.status =
-old.prediction === latestResult
-? "WIN"
-: "LOSS";
-
-}
-
-}
-
-// CONFIDENCE
-
-const confidence =
-Math.floor(
-82 + Math.random()*18
-);
-
-// SIGNAL
-
-let signal = "LOW";
-
-if(confidence >= 92){
-
-signal = "STRONG";
-
-}else if(confidence >= 85){
-
-signal = "NORMAL";
-
-}
-
-// IQ
-
-const iq =
-Math.floor(
-170 + Math.random()*30
-);
-
-// WIN RATE
-
-const wins =
-aiHistory.filter(
-x => x.status === "WIN"
-).length;
-
-const total =
-aiHistory.filter(
-x => x.status !== "PENDING"
-).length;
-
-const winrate =
-total > 0
-? Math.floor((wins/total)*100)
-: 0;
-
-// SAVE
-
-const signalData = {
-
-period:nextPeriod,
-
-prediction,
-
-confidence,
-
-signal,
-
-iq,
-
-status:"PENDING",
-
-result:"WAIT",
-
-number:"--",
-
-time:
-new Date().toLocaleTimeString()
-
-};
-
-aiHistory.unshift(signalData);
-
-aiHistory =
-aiHistory.slice(0,30);
-
-localStorage.setItem(
-"zrxHistory",
-JSON.stringify(aiHistory)
-);
-
-// UI
-
-document.getElementById(
-"period"
-).innerText =
-nextPeriod;
-
-document.getElementById(
-"prediction"
-).innerText =
-prediction;
-
-document.getElementById(
-"prediction"
-).className =
-"prediction " +
-prediction.toLowerCase();
-
-document.getElementById(
-"latestNumber"
-).innerText =
-latestNumber;
-
-document.getElementById(
-"lastResult"
-).innerText =
-latestResult;
-
-document.getElementById(
-"confidence"
-).innerText =
-confidence + "%";
-
-document.getElementById(
-"signal"
-).innerText =
-signal;
-
-document.getElementById(
-"iq"
-).innerText =
-iq;
-
-document.getElementById(
-"winrate"
-).innerText =
-winrate + "%";
-
-document.getElementById(
-"fill"
-).style.width =
-confidence + "%";
-
-renderHistory();
-
-}
-
-}catch(err){
-
-console.log(err);
-
-}
-
-}
-
-// HISTORY
-
-function renderHistory(){
-
-const history =
-document.getElementById(
-"history"
-);
-
-history.innerHTML = "";
-
-aiHistory.forEach(item=>{
-
-history.innerHTML += `
-
-<div class="history-item">
-
-<div class="history-top">
-
-<div class="
-history-prediction
-${item.prediction.toLowerCase()}
-">
-
-${item.prediction}
-
-</div>
-
-<div>
-${item.confidence}%
-</div>
-
-</div>
-
-<div>
-Period:
-${item.period}
-</div>
-
-<div>
-Result:
-${item.result}
-</div>
-
-<div>
-Number:
-${item.number}
-</div>
-
-<div>
-Signal:
-${item.signal}
-</div>
-
-<div>
-Status:
-<span class="
-${item.status === 'WIN'
-? 'status-win'
-: item.status === 'LOSS'
-? 'status-loss'
-: 'status-pending'}
-">
-
-${item.status}
-
-</span>
-</div>
-
-<div>
-AI IQ:
-${item.iq}
-</div>
-
-<div class="time">
-${item.time}
-</div>
-
-</div>
-
-`;
-
-});
-
-// TOTAL
-
-document.getElementById(
-"total"
-).innerText =
-aiHistory.length;
-
-}
-
-// COUNTDOWN
-
-function startCountdown(){
-
-setInterval(()=>{
-
-const now =
-new Date();
-
-let seconds =
-now.getSeconds();
-
-let remaining =
-60 - seconds;
-
-if(remaining < 10){
-
-remaining =
-"0" + remaining;
-
-}
-
-document.getElementById(
-"countdown"
-).innerText =
-"00:" + remaining;
-
-},1000);
-
-}
-
-// START
-
-runAI();
-
-renderHistory();
-
-startCountdown();
-
-setInterval(()=>{
-
-runAI();
-
-},4000);
-
-</script>
+<script src="dashboard.js"></script>
 
 </body>
 </html>
