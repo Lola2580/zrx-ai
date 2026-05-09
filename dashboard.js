@@ -1,6 +1,5 @@
 const API_URL =
-"https://YOUR-RAILWAY-URL/api/predict";
-
+"https://zrx-ai-production.up.railway.app/api/predict";
 // CHECK LOGIN
 
 const user =
