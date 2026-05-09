@@ -2,63 +2,28 @@ import express from "express";
 
 const app = express();
 
-// IMPORTANT
-
-app.disable("x-powered-by");
-
-// ROOT ROUTE
-
 app.get("/", (req, res) => {
-
-res.status(200).send(
-"ZRX AI LIVE 🚀"
-);
-
+  res.send("ZRX AI LIVE 🚀");
 });
 
-// TEST API
+app.get("/health", (req, res) => {
+  res.send("OK");
+});
 
 app.get("/api/predict", (req, res) => {
 
-res.status(200).json({
-
-success: true,
-
-prediction: {
-
-prediction: "BIG",
-
-confidence: 92
-
-}
+  res.json({
+    success: true,
+    prediction: {
+      prediction: "BIG",
+      confidence: 92
+    }
+  });
 
 });
 
-});
+const PORT = process.env.PORT || 3000;
 
-// HEALTHCHECK
-
-app.get("/health", (req, res) => {
-
-res.status(200).send("OK");
-
-});
-
-// PORT
-
-const PORT =
-process.env.PORT || 8080;
-
-// VERY IMPORTANT
-
-const HOST = "0.0.0.0";
-
-// START
-
-app.listen(PORT, HOST, () => {
-
-console.log(
-`🚀 Server Running On ${PORT}`
-);
-
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
 });
