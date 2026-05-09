@@ -1,18 +1,10 @@
 import express from "express";
-import cors from "cors";
 
 const app = express();
 
-app.use(cors());
-
 app.get("/", (req, res) => {
 
-res.json({
-
-success: true,
-message: "🚀 ZRX AI Running"
-
-});
+res.send("ZRX AI Backend Running 🚀");
 
 });
 
@@ -24,7 +16,7 @@ success: true,
 
 prediction: {
 
-period: "12345",
+period: "123456",
 
 prediction: "BIG",
 
