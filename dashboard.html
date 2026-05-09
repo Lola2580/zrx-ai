@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <title>ZRX AI Dashboard</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -19,7 +23,7 @@ font-family:'Poppins',sans-serif;
 body{
 background:#050505;
 color:white;
-padding:20px;
+padding:15px;
 overflow-x:hidden;
 }
 
@@ -38,18 +42,18 @@ z-index:-1;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:25px;
+margin-bottom:20px;
 }
 
 .logo{
-font-size:34px;
+font-size:30px;
 font-weight:700;
 color:#ff3434;
 text-shadow:0 0 15px rgba(255,0,0,.5);
 }
 
 .logout-btn{
-padding:12px 20px;
+padding:12px 18px;
 border:none;
 border-radius:14px;
 background:linear-gradient(135deg,#ff1e1e,#990000);
@@ -61,41 +65,35 @@ box-shadow:0 0 15px rgba(255,0,0,.25);
 
 .dashboard-layout{
 display:grid;
-grid-template-columns:2fr 1fr;
+grid-template-columns:1fr;
 gap:20px;
 }
 
 .left-panel{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:15px;
 }
 
 .card{
 background:linear-gradient(145deg,#121212,#0c0c0c);
 border:1px solid #202020;
 border-radius:24px;
-padding:22px;
+padding:20px;
 position:relative;
 overflow:hidden;
 box-shadow:0 0 25px rgba(255,0,0,.08);
-transition:.3s;
-}
-
-.card:hover{
-transform:translateY(-4px);
-box-shadow:0 0 35px rgba(255,0,0,.18);
 }
 
 .card-title{
-font-size:13px;
+font-size:12px;
 letter-spacing:1px;
 color:#777;
-margin-bottom:15px;
+margin-bottom:12px;
 }
 
 .card-value{
-font-size:38px;
+font-size:32px;
 font-weight:700;
 }
 
@@ -116,22 +114,19 @@ color:#ff4d4d;
 }
 
 .clock{
-font-size:28px;
+font-size:24px;
 }
 
 .main-ai-card{
 grid-column:span 2;
-background:
-linear-gradient(145deg,#171717,#0d0d0d);
-border:1px solid #242424;
 }
 
 .ai-status{
 display:flex;
 justify-content:space-between;
 align-items:center;
-flex-wrap:wrap;
 gap:20px;
+flex-wrap:wrap;
 }
 
 .prediction-box{
@@ -139,7 +134,7 @@ text-align:center;
 }
 
 .prediction-box h1{
-font-size:70px;
+font-size:60px;
 margin-top:10px;
 }
 
@@ -162,11 +157,7 @@ background:linear-gradient(90deg,#ff0000,#ffd500,#00ff99);
 background:linear-gradient(145deg,#121212,#0c0c0c);
 border:1px solid #202020;
 border-radius:24px;
-padding:22px;
-height:calc(100vh - 120px);
-overflow:hidden;
-display:flex;
-flex-direction:column;
+padding:20px;
 }
 
 .history-title{
@@ -177,7 +168,7 @@ color:#ff3434;
 }
 
 #history{
-flex:1;
+max-height:500px;
 overflow-y:auto;
 padding-right:6px;
 }
@@ -212,27 +203,24 @@ color:#777;
 margin-top:8px;
 }
 
-@media(max-width:1000px){
-
-.dashboard-layout{
-grid-template-columns:1fr;
-}
-
-.right-panel{
-height:auto;
-}
+@media(max-width:700px){
 
 .main-ai-card{
 grid-column:span 1;
 }
 
 .prediction-box h1{
-font-size:50px;
+font-size:45px;
+}
+
+.card-value{
+font-size:26px;
 }
 
 }
 
 </style>
+
 </head>
 <body>
 
@@ -257,11 +245,13 @@ Logout
 <div class="ai-status">
 
 <div>
+
 <div class="card-title">
-AI SYSTEM STATUS
+CURRENT PERIOD
 </div>
-<div class="card-value green">
-ONLINE
+
+<div class="card-value yellow" id="period">
+--
 </div>
 
 <div class="confidence-bar">
@@ -271,12 +261,15 @@ ONLINE
 </div>
 
 <div class="prediction-box">
+
 <div class="card-title">
-LIVE PREDICTION
+AI PREDICTION
 </div>
+
 <h1 class="big" id="prediction">
-BIG
+WAIT
 </h1>
+
 </div>
 
 </div>
@@ -284,43 +277,123 @@ BIG
 </div>
 
 <div class="card">
-<div class="card-title">CONFIDENCE</div>
+
+<div class="card-title">
+LATEST NUMBER
+</div>
+
+<div class="card-value red" id="number">
+--
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">
+RESULT STATUS
+</div>
+
+<div class="card-value green" id="resultStatus">
+LIVE
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">
+CONFIDENCE
+</div>
+
 <div class="card-value yellow" id="confidence">
 92%
 </div>
+
 </div>
 
 <div class="card">
-<div class="card-title">AI IQ</div>
+
+<div class="card-title">
+AI IQ
+</div>
+
 <div class="card-value red" id="iq">
 178
 </div>
+
 </div>
 
 <div class="card">
-<div class="card-title">WIN RATE</div>
+
+<div class="card-title">
+WIN RATE
+</div>
+
 <div class="card-value green" id="winrate">
 87%
 </div>
+
 </div>
 
 <div class="card">
-<div class="card-title">TOTAL SIGNALS</div>
+
+<div class="card-title">
+NEXT RESULT
+</div>
+
+<div class="card-value yellow" id="countdown">
+00:00
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">
+SIGNAL STRENGTH
+</div>
+
+<div class="card-value green" id="signal">
+STRONG
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">
+LIVE CLOCK
+</div>
+
+<div class="card-value clock" id="clock">
+--
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">
+TOTAL SIGNALS
+</div>
+
 <div class="card-value" id="total">
 0
 </div>
+
 </div>
 
 <div class="card">
-<div class="card-title">LIVE CLOCK</div>
-<div class="card-value clock" id="clock"></div>
+
+<div class="card-title">
+WELCOME
 </div>
 
-<div class="card">
-<div class="card-title">WELCOME</div>
 <div class="card-value" id="welcome">
 Hello Admin
 </div>
+
 </div>
 
 </div>
@@ -387,7 +460,7 @@ new Date().toLocaleTimeString();
 
 },1000);
 
-// AI STORAGE
+// STORAGE
 
 let aiHistory = JSON.parse(
 localStorage.getItem("aiHistory")
@@ -395,7 +468,7 @@ localStorage.getItem("aiHistory")
 
 let currentPrediction = null;
 
-// AI ENGINE
+// MAIN AI ENGINE
 
 async function generateAI(){
 
@@ -426,7 +499,7 @@ latestNumber >= 5
 ? "BIG"
 : "SMALL";
 
-// TREND
+// TREND ANALYSIS
 
 let bigCount = 0;
 let smallCount = 0;
@@ -447,6 +520,8 @@ smallCount++;
 }
 
 });
+
+// AI PREDICTION
 
 let aiPrediction =
 bigCount > smallCount
@@ -471,6 +546,20 @@ Math.floor(
 80 + Math.random()*20
 );
 
+// SIGNAL
+
+let signal = "WEAK";
+
+if(confidence >= 90){
+
+signal = "STRONG";
+
+}else if(confidence >= 80){
+
+signal = "MEDIUM";
+
+}
+
 // IQ
 
 const iq =
@@ -478,7 +567,7 @@ Math.floor(
 160 + Math.random()*40
 );
 
-// WINRATE
+// WIN RATE
 
 const winrate =
 Math.floor(
@@ -509,7 +598,7 @@ latestNumber;
 
 }
 
-// CREATE NEW PREDICTION
+// CREATE NEW SIGNAL
 
 if(
 !aiHistory.length ||
@@ -541,7 +630,7 @@ aiHistory.unshift(currentPrediction);
 
 }
 
-// LIMIT HISTORY
+// LIMIT
 
 aiHistory = aiHistory.slice(0,20);
 
@@ -552,7 +641,7 @@ localStorage.setItem(
 JSON.stringify(aiHistory)
 );
 
-// UI UPDATE
+// UPDATE UI
 
 document.getElementById(
 "period"
@@ -580,6 +669,11 @@ document.getElementById(
 confidence + "%";
 
 document.getElementById(
+"signal"
+).innerText =
+signal;
+
+document.getElementById(
 "iq"
 ).innerText =
 iq;
@@ -594,7 +688,7 @@ document.getElementById(
 ).style.width =
 confidence + "%";
 
-// HISTORY
+// RENDER
 
 renderHistory();
 
@@ -611,7 +705,7 @@ document.getElementById(
 
 }
 
-// RENDER HISTORY
+// HISTORY
 
 function renderHistory(){
 
@@ -712,9 +806,43 @@ aiHistory.length;
 
 }
 
+// COUNTDOWN
+
+function startCountdown(){
+
+setInterval(()=>{
+
+const now = new Date();
+
+let seconds =
+now.getSeconds();
+
+let remaining =
+60 - seconds;
+
+if(remaining < 10){
+
+remaining =
+"0" + remaining;
+
+}
+
+document.getElementById(
+"countdown"
+).innerText =
+"00:" + remaining;
+
+},1000);
+
+}
+
 // START
 
 generateAI();
+
+renderHistory();
+
+startCountdown();
 
 setInterval(()=>{
 
@@ -723,5 +851,6 @@ generateAI();
 },5000);
 
 </script>
+
 </body>
 </html>
