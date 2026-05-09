@@ -26,7 +26,7 @@ res.json({
 
 success:true,
 
-message:"ZRX AI Backend Running 🚀"
+message:"🚀 ZRX AI Backend Running"
 
 });
 
@@ -58,18 +58,21 @@ res.json({
 
 success:true,
 
-serverTime:
-new Date(),
-
 prediction,
 
-memory:getMemory()
+memory:getMemory(),
+
+serverTime:
+new Date()
 
 });
 
 }catch(err){
 
-console.log(err);
+console.log(
+"SERVER ERROR:",
+err.message
+);
 
 res.status(500).json({
 
@@ -99,7 +102,7 @@ memory:getMemory()
 
 });
 
-// PORT
+// RAILWAY PORT FIX
 
 const PORT =
 process.env.PORT || 3000;
