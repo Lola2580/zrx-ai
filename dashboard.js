@@ -1,5 +1,8 @@
+// BACKEND API
+
 const API_URL =
 "https://zrx-ai-production.up.railway.app/api/predict";
+
 // CHECK LOGIN
 
 const user =
@@ -39,35 +42,27 @@ await fetch(API_URL);
 const data =
 await response.json();
 
+// CHECK
+
 if(
-!data.success ||
-!data.prediction
+!data.success
 ){
 
 return;
 
 }
 
+// AI DATA
+
 const ai =
 data.prediction;
 
-// UI UPDATE
-
-document.getElementById(
-"period"
-).innerText =
-ai.period;
+// UPDATE UI
 
 document.getElementById(
 "prediction"
 ).innerText =
 ai.prediction;
-
-document.getElementById(
-"prediction"
-).className =
-"prediction " +
-ai.prediction.toLowerCase();
 
 document.getElementById(
 "confidence"
@@ -85,9 +80,9 @@ document.getElementById(
 ai.iq;
 
 document.getElementById(
-"fill"
-).style.width =
-ai.confidence + "%";
+"period"
+).innerText =
+ai.period;
 
 // HISTORY
 
@@ -97,7 +92,10 @@ data.memory
 
 }catch(err){
 
-console.log(err);
+console.log(
+"FRONTEND ERROR",
+err
+);
 
 }
 
@@ -140,21 +138,6 @@ ${item.period}
 <div>
 Signal:
 ${item.signal}
-</div>
-
-<div>
-Trend:
-${item.trend}
-</div>
-
-<div>
-Streak:
-${item.streak}
-</div>
-
-<div>
-Hot Number:
-${item.hotNumber}
 </div>
 
 <div>
@@ -217,6 +200,8 @@ document.getElementById(
 fetchAI();
 
 startCountdown();
+
+// AUTO REFRESH
 
 setInterval(()=>{
 
