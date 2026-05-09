@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ZRX AI Predictor</title>
+<title>ZRX Ultimate AI</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -21,8 +21,8 @@ font-family:'Poppins',sans-serif;
 body{
 background:#050505;
 color:white;
-padding:15px;
 overflow-x:hidden;
+padding:14px;
 }
 
 body::before{
@@ -31,7 +31,7 @@ position:fixed;
 inset:0;
 background:
 radial-gradient(circle at top left,#ff000020,transparent 30%),
-radial-gradient(circle at bottom right,#00ffff15,transparent 30%),
+radial-gradient(circle at bottom right,#00ffff18,transparent 30%),
 #050505;
 z-index:-1;
 }
@@ -40,19 +40,19 @@ z-index:-1;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:20px;
+margin-bottom:18px;
 }
 
 .logo{
 font-size:30px;
 font-weight:700;
 color:#ff3434;
-text-shadow:0 0 15px rgba(255,0,0,.4);
+text-shadow:0 0 18px rgba(255,0,0,.45);
 }
 
 .logout-btn{
-padding:12px 18px;
 border:none;
+padding:12px 18px;
 border-radius:14px;
 background:linear-gradient(135deg,#ff1e1e,#990000);
 color:white;
@@ -60,50 +60,51 @@ font-weight:600;
 cursor:pointer;
 }
 
-.dashboard{
-display:grid;
-grid-template-columns:1fr;
-gap:18px;
-}
+.main-card{
+background:
+linear-gradient(145deg,#141414,#0c0c0c);
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-gap:15px;
-}
-
-.card{
-background:linear-gradient(145deg,#121212,#0d0d0d);
 border:1px solid #222;
-border-radius:24px;
-padding:20px;
-box-shadow:0 0 25px rgba(255,0,0,.06);
+
+border-radius:28px;
+
+padding:24px;
+
+box-shadow:
+0 0 30px rgba(255,0,0,.12);
+
+margin-bottom:18px;
 }
 
-.card-title{
+.label{
 font-size:12px;
 letter-spacing:1px;
 color:#777;
-margin-bottom:10px;
 }
 
-.card-value{
-font-size:30px;
+.period{
+margin-top:8px;
+font-size:22px;
 font-weight:700;
-}
-
-.main-card{
-padding:25px;
+color:#ffd500;
 }
 
 .prediction{
-font-size:85px;
+margin-top:18px;
+font-size:90px;
 font-weight:700;
 text-align:center;
-margin-top:10px;
-color:#00c3ff;
-text-shadow:0 0 20px rgba(0,195,255,.5);
 animation:pulse 1.5s infinite;
+}
+
+.big{
+color:#00c3ff;
+text-shadow:0 0 18px rgba(0,195,255,.5);
+}
+
+.small{
+color:#ffd500;
+text-shadow:0 0 18px rgba(255,213,0,.5);
 }
 
 @keyframes pulse{
@@ -113,7 +114,7 @@ transform:scale(1);
 }
 
 50%{
-transform:scale(1.06);
+transform:scale(1.05);
 }
 
 100%{
@@ -122,12 +123,58 @@ transform:scale(1);
 
 }
 
-.big{
-color:#00c3ff;
+.bar{
+margin-top:18px;
+width:100%;
+height:14px;
+background:#1b1b1b;
+border-radius:20px;
+overflow:hidden;
 }
 
-.small{
-color:#ffd500;
+.fill{
+height:100%;
+width:0%;
+background:
+linear-gradient(
+90deg,
+#ff0000,
+#ffd500,
+#00ff99
+);
+transition:.4s;
+}
+
+.stats{
+display:grid;
+grid-template-columns:
+repeat(2,1fr);
+
+gap:14px;
+margin-bottom:18px;
+}
+
+.card{
+background:
+linear-gradient(145deg,#141414,#0d0d0d);
+
+border:1px solid #222;
+
+border-radius:22px;
+
+padding:18px;
+}
+
+.card-title{
+font-size:11px;
+letter-spacing:1px;
+color:#777;
+}
+
+.card-value{
+margin-top:10px;
+font-size:28px;
+font-weight:700;
 }
 
 .green{
@@ -142,46 +189,41 @@ color:#ff4d4d;
 color:#ffd500;
 }
 
-.bar{
-margin-top:15px;
-width:100%;
-height:12px;
-background:#1c1c1c;
-border-radius:20px;
-overflow:hidden;
+.blue{
+color:#00c3ff;
 }
 
-.fill{
-height:100%;
-width:90%;
-background:linear-gradient(90deg,#ff0000,#ffd500,#00ff99);
-}
+.history-box{
+background:
+linear-gradient(145deg,#141414,#0d0d0d);
 
-.history-panel{
-background:linear-gradient(145deg,#121212,#0d0d0d);
 border:1px solid #222;
-border-radius:24px;
+
+border-radius:26px;
+
 padding:20px;
 }
 
 .history-title{
 font-size:22px;
 font-weight:700;
-margin-bottom:15px;
+margin-bottom:16px;
 color:#ff3434;
 }
 
 #history{
-max-height:500px;
+display:flex;
+flex-direction:column;
+gap:12px;
+max-height:450px;
 overflow-y:auto;
 }
 
 .history-item{
-background:#171717;
+background:#181818;
+padding:16px;
+border-radius:18px;
 border-left:4px solid #00ff99;
-padding:15px;
-border-radius:16px;
-margin-bottom:14px;
 }
 
 .history-top{
@@ -190,12 +232,17 @@ justify-content:space-between;
 margin-bottom:10px;
 }
 
+.history-prediction{
+font-size:20px;
+font-weight:700;
+}
+
 .status-win{
 color:#00ff99;
 }
 
 .status-loss{
-color:#ff3c3c;
+color:#ff4d4d;
 }
 
 .status-pending{
@@ -208,10 +255,10 @@ font-size:12px;
 color:#777;
 }
 
-@media(max-width:700px){
+@media(max-width:600px){
 
 .prediction{
-font-size:60px;
+font-size:65px;
 }
 
 .card-value{
@@ -236,34 +283,32 @@ Logout
 
 </div>
 
-<div class="dashboard">
+<div class="main-card">
 
-<div class="card main-card">
-
-<div class="card-title">
-NEXT PERIOD PREDICTION
+<div class="label">
+NEXT PERIOD
 </div>
 
-<div class="card-value yellow" id="period">
+<div class="period" id="period">
 --
 </div>
 
-<div class="prediction" id="prediction">
-WAIT
+<div class="prediction big" id="prediction">
+BIG
 </div>
 
 <div class="bar">
-<div class="fill" id="confidenceFill"></div>
+<div class="fill" id="fill"></div>
 </div>
 
 </div>
 
-<div class="grid">
+<div class="stats">
 
 <div class="card">
 
 <div class="card-title">
-LATEST RESULT
+LATEST NUMBER
 </div>
 
 <div class="card-value red" id="latestNumber">
@@ -278,7 +323,7 @@ LATEST RESULT
 LAST RESULT
 </div>
 
-<div class="card-value green" id="lastResult">
+<div class="card-value blue" id="lastResult">
 --
 </div>
 
@@ -358,7 +403,7 @@ TOTAL SIGNALS
 
 </div>
 
-<div class="history-panel">
+<div class="history-box">
 
 <div class="history-title">
 Prediction History
@@ -368,14 +413,10 @@ Prediction History
 
 </div>
 
-</div>
-
 <script>
 
-const API_URL =
+const API =
 "https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json";
-
-// AUTH
 
 const user =
 JSON.parse(
@@ -389,8 +430,6 @@ window.location.href =
 
 }
 
-// LOGOUT
-
 function logout(){
 
 localStorage.removeItem(
@@ -402,46 +441,35 @@ window.location.href =
 
 }
 
-// STORAGE
-
 let aiHistory =
 JSON.parse(
-localStorage.getItem("aiHistory")
+localStorage.getItem("zrxHistory")
 ) || [];
 
 let lockedPeriod = null;
 
 // MAIN AI
 
-async function generateAI(){
+async function runAI(){
 
 try{
 
 const response =
 await fetch(
-API_URL + "?t=" + Date.now()
+API + "?t=" + Date.now()
 );
 
 const data =
 await response.json();
 
-const history =
-data.data.list;
-
 const latest =
-history[0];
+data.data.list[0];
 
-// COMPLETED PERIOD
-
-const completedPeriod =
+const currentPeriod =
 parseInt(latest.issueNumber);
 
-// NEXT PERIOD
-
 const nextPeriod =
-String(completedPeriod + 1);
-
-// LATEST RESULT
+String(currentPeriod + 1);
 
 const latestNumber =
 parseInt(latest.number);
@@ -456,7 +484,9 @@ latestNumber >= 5
 let bigCount = 0;
 let smallCount = 0;
 
-history.slice(0,10).forEach(item=>{
+data.data.list
+.slice(0,10)
+.forEach(item=>{
 
 const n =
 parseInt(item.number);
@@ -473,16 +503,16 @@ smallCount++;
 
 });
 
-// AI PREDICTION
+// AI LOGIC
 
 let prediction =
-bigCount > smallCount
+bigCount >= smallCount
 ? "BIG"
 : "SMALL";
 
-// REVERSAL CHANCE
+// REVERSAL
 
-if(Math.random() > 0.7){
+if(Math.random() > 0.75){
 
 prediction =
 prediction === "BIG"
@@ -491,50 +521,16 @@ prediction === "BIG"
 
 }
 
-// LOCK PREDICTION
+// LOCK
 
 if(lockedPeriod !== nextPeriod){
 
-lockedPeriod = nextPeriod;
+lockedPeriod =
+nextPeriod;
 
-// CONFIDENCE
+// CHECK OLD
 
-const confidence =
-Math.floor(
-80 + Math.random()*20
-);
-
-// SIGNAL
-
-let signal = "LOW";
-
-if(confidence >= 90){
-
-signal = "STRONG";
-
-}else if(confidence >= 80){
-
-signal = "NORMAL";
-
-}
-
-// IQ
-
-const iq =
-Math.floor(
-160 + Math.random()*40
-);
-
-// WIN RATE
-
-const winrate =
-Math.floor(
-85 + Math.random()*15
-);
-
-// CHECK OLD SIGNAL
-
-if(aiHistory.length > 0){
+if(aiHistory.length){
 
 const old =
 aiHistory[0];
@@ -558,7 +554,52 @@ old.prediction === latestResult
 
 }
 
-// NEW SIGNAL
+// CONFIDENCE
+
+const confidence =
+Math.floor(
+82 + Math.random()*18
+);
+
+// SIGNAL
+
+let signal = "LOW";
+
+if(confidence >= 92){
+
+signal = "STRONG";
+
+}else if(confidence >= 85){
+
+signal = "NORMAL";
+
+}
+
+// IQ
+
+const iq =
+Math.floor(
+170 + Math.random()*30
+);
+
+// WIN RATE
+
+const wins =
+aiHistory.filter(
+x => x.status === "WIN"
+).length;
+
+const total =
+aiHistory.filter(
+x => x.status !== "PENDING"
+).length;
+
+const winrate =
+total > 0
+? Math.floor((wins/total)*100)
+: 0;
+
+// SAVE
 
 const signalData = {
 
@@ -571,8 +612,6 @@ confidence,
 signal,
 
 iq,
-
-winrate,
 
 status:"PENDING",
 
@@ -588,14 +627,14 @@ new Date().toLocaleTimeString()
 aiHistory.unshift(signalData);
 
 aiHistory =
-aiHistory.slice(0,20);
+aiHistory.slice(0,30);
 
 localStorage.setItem(
-"aiHistory",
+"zrxHistory",
 JSON.stringify(aiHistory)
 );
 
-// UPDATE UI
+// UI
 
 document.getElementById(
 "period"
@@ -610,6 +649,7 @@ prediction;
 document.getElementById(
 "prediction"
 ).className =
+"prediction " +
 prediction.toLowerCase();
 
 document.getElementById(
@@ -643,7 +683,7 @@ document.getElementById(
 winrate + "%";
 
 document.getElementById(
-"confidenceFill"
+"fill"
 ).style.width =
 confidence + "%";
 
@@ -663,46 +703,32 @@ console.log(err);
 
 function renderHistory(){
 
-const historyDiv =
+const history =
 document.getElementById(
 "history"
 );
 
-historyDiv.innerHTML = "";
-
-let wins = 0;
-let losses = 0;
+history.innerHTML = "";
 
 aiHistory.forEach(item=>{
 
-if(item.status === "WIN"){
-wins++;
-}
-
-if(item.status === "LOSS"){
-losses++;
-}
-
-historyDiv.innerHTML += `
+history.innerHTML += `
 
 <div class="history-item">
 
 <div class="history-top">
 
 <div class="
-${item.prediction === 'BIG'
-? 'big'
-: 'small'}
+history-prediction
+${item.prediction.toLowerCase()}
 ">
 
-<b>${item.prediction}</b>
+${item.prediction}
 
 </div>
 
 <div>
-
 ${item.confidence}%
-
 </div>
 
 </div>
@@ -729,7 +755,6 @@ ${item.signal}
 
 <div>
 Status:
-
 <span class="
 ${item.status === 'WIN'
 ? 'status-win'
@@ -741,7 +766,6 @@ ${item.status === 'WIN'
 ${item.status}
 
 </span>
-
 </div>
 
 <div>
@@ -750,9 +774,7 @@ ${item.iq}
 </div>
 
 <div class="time">
-
 ${item.time}
-
 </div>
 
 </div>
@@ -803,7 +825,7 @@ document.getElementById(
 
 // START
 
-generateAI();
+runAI();
 
 renderHistory();
 
@@ -811,7 +833,7 @@ startCountdown();
 
 setInterval(()=>{
 
-generateAI();
+runAI();
 
 },4000);
 
