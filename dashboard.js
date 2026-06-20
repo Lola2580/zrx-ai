@@ -42,6 +42,8 @@ await fetch(API_URL);
 const data =
 await response.json();
 
+console.log(data);
+
 if(!data.success){
 
 return;
@@ -51,39 +53,72 @@ return;
 const ai =
 data.prediction;
 
-// UPDATE UI
+// PREDICTION
 
+const predictionBox =
 document.getElementById(
 "prediction"
-).innerText =
-ai.prediction;
+);
 
+predictionBox.innerText =
+ai.prediction || "WAIT";
+
+// COLOR CHANGE
+
+predictionBox.classList.remove(
+"big",
+"small"
+);
+
+if(
+ai.prediction === "BIG"
+){
+
+predictionBox.classList.add(
+"big"
+);
+
+}else{
+
+predictionBox.classList.add(
+"small"
+);
+
+}
+
+// CONFIDENCE
+
+const confidence =
 document.getElementById(
 "confidence"
-).innerText =
-ai.confidence + "%";
+);
 
-// OPTIONAL SAFE VALUES
+if(confidence){
 
-document.getElementById(
-"signal"
-).innerText =
-ai.signal || "--";
+confidence.innerText =
+(ai.confidence || 0) + "%";
 
-document.getElementById(
-"iq"
-).innerText =
-ai.iq || "--";
+}
 
+// PERIOD
+
+const period =
 document.getElementById(
 "period"
-).innerText =
-ai.period || "--";
+);
+
+if(period){
+
+period.innerText =
+Date.now();
+
+}
 
 // HISTORY
 
-renderHistory(
-data.memory || []
+addHistory(
+ai.prediction,
+ai.confidence
 );
 
 }catch(err){
@@ -99,64 +134,66 @@ err
 
 // HISTORY
 
-function renderHistory(memory){
+function addHistory(
+prediction,
+confidence
+){
 
 const history =
 document.getElementById(
 "history"
 );
 
-history.innerHTML = "";
+const item =
+document.createElement(
+"div"
+);
 
-memory.forEach(item=>{
+item.className =
+"history-item";
 
-history.innerHTML += `
-
-<div class="history-item">
+item.innerHTML = `
 
 <div class="history-top">
 
 <div>
-${item.prediction}
+${prediction}
 </div>
 
 <div>
-${item.confidence}%
+${confidence}%
 </div>
 
-</div>
-
-<div>
-Period:
-${item.period}
-</div>
-
-<div>
-Signal:
-${item.signal}
-</div>
-
-<div>
-Status:
-${item.status}
 </div>
 
 <div class="time">
-${item.time}
-</div>
-
+${new Date().toLocaleTimeString()}
 </div>
 
 `;
 
-});
+history.prepend(
+item
+);
+
+// KEEP LAST 10
+
+while(
+history.children.length > 10
+){
+
+history.removeChild(
+history.lastChild
+);
+
+}
 
 // TOTAL
 
 document.getElementById(
 "total"
 ).innerText =
-memory.length;
+history.children.length;
 
 }
 
@@ -169,23 +206,27 @@ setInterval(()=>{
 const now =
 new Date();
 
-let seconds =
-now.getSeconds();
-
 let remaining =
-60 - seconds;
+59 - now.getSeconds();
 
-if(remaining < 10){
+if(
+remaining < 0
+){
 
-remaining =
-"0" + remaining;
+remaining = 59;
 
 }
 
 document.getElementById(
 "countdown"
 ).innerText =
-"00:" + remaining;
+"00:" +
+String(
+remaining
+).padStart(
+2,
+"0"
+);
 
 },1000);
 
